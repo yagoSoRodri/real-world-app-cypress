@@ -9,7 +9,7 @@ Este repositório contém a implementação de casos de teste automatizados foca
 
 ### 🛠️ Tecnologias Utilizadas
 - **Framework de Teste:** [Cypress](https://www.cypress.io/)
-- **Linguagem:** JavaScript (Refatorado de TypeScript para maior simplicidade nos exercícios)
+- **Linguagem:** JavaScript
 - **App Base:** React, Express, lowdb.
 
 ---
