@@ -6,7 +6,7 @@ orbs:
 executors:
   with-chrome-and-firefox:
     docker:
-      - image: "cypress/browsers:22.20.0"
+      - image: 'cypress/browsers:22.20.0'
     resource_class: large
     environment:
       CYPRESS_coverage: false
@@ -76,7 +76,7 @@ commands:
         default: chrome
       specPattern:
         type: string
-        default: ""
+        default: ''
       ciBuildId:
         type: string
       group:
@@ -146,7 +146,7 @@ jobs:
         default: chrome
       specPattern:
         type: string
-        default: ""
+        default: ''
       ciBuildId:
         type: string
       group:
@@ -175,59 +175,59 @@ jobs:
 linux-workflow: &linux-workflow
   jobs:
     - setup_project_and_cypress_linux:
-        name: "Setup Linux"
+        name: 'Setup Linux'
     # Run Cypress Component tests
     - cypress_tests_linux:
-        name: "Cypress Component Tests"
+        name: 'Cypress Component Tests'
         ciBuildId: ${CIRCLE_SHA1:0:8}
         group: Component
         requires:
           - Setup Linux
     # Run API tests against backend server
     - cypress_tests_linux:
-        name: "Cypress API Tests"
+        name: 'Cypress API Tests'
         browser: chrome
-        specPattern: "cypress/tests/api/*"
+        specPattern: 'cypress/tests/api/*'
         ciBuildId: ${CIRCLE_SHA1:0:8}
         group: API
         requires:
           - Setup Linux
     # Run E2E tests in Chrome
     - cypress_tests_linux:
-        name: "UI Tests - Chrome"
+        name: 'UI Tests - Chrome'
         browser: chrome
-        specPattern: "cypress/tests/ui/*"
+        specPattern: 'cypress/tests/ui/*'
         ciBuildId: ${CIRCLE_SHA1:0:8}
-        group: "UI - Chrome"
+        group: 'UI - Chrome'
         recordPercy: true
         requires:
           - Setup Linux
     # Run E2E tests in Chrome with mobile device viewport
     - cypress_tests_linux:
-        name: "UI Tests - Chrome - Mobile"
+        name: 'UI Tests - Chrome - Mobile'
         browser: chrome
-        specPattern: "cypress/tests/ui/*"
+        specPattern: 'cypress/tests/ui/*'
         ciBuildId: ${CIRCLE_SHA1:0:8}
-        group: "UI - Chrome - Mobile"
+        group: 'UI - Chrome - Mobile'
         isMobile: true
         requires:
           - Setup Linux
     # Run E2E tests in Firefox
     - cypress_tests_linux:
-        name: "UI Tests - Firefox"
+        name: 'UI Tests - Firefox'
         browser: firefox
-        specPattern: "cypress/tests/ui/*"
+        specPattern: 'cypress/tests/ui/*'
         ciBuildId: ${CIRCLE_SHA1:0:8}
-        group: "UI - Firefox"
+        group: 'UI - Firefox'
         requires:
           - Setup Linux
     # Run E2E tests in Firefox with mobile device viewport
     - cypress_tests_linux:
-        name: "UI Tests - Firefox - Mobile"
+        name: 'UI Tests - Firefox - Mobile'
         browser: firefox
-        specPattern: "cypress/tests/ui/*"
+        specPattern: 'cypress/tests/ui/*'
         ciBuildId: ${CIRCLE_SHA1:0:8}
-        group: "UI - Firefox - Mobile"
+        group: 'UI - Firefox - Mobile'
         isMobile: true
         requires:
           - Setup Linux
