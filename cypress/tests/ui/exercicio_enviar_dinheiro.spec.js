@@ -1,4 +1,4 @@
-import { isMobile } from '../../support/utils';
+﻿import { isMobile } from '../../support/utils';
 import Dinero from 'dinero.js';
 
 describe('Enviar dinheiro com saldo suficiente', () => {
@@ -21,7 +21,7 @@ describe('Enviar dinheiro com saldo suficiente', () => {
   it('Deve enviar dinheiro com sucesso', () => {
     const payment = {
       amount: '25',
-      description: 'Pagamento de almoço 🍕',
+      description: 'Pagamento de almoÃ§o ðŸ•',
     };
 
     const initialBalance = ctx.sender.balance;
@@ -89,7 +89,7 @@ describe('Enviar dinheiro com saldo insuficiente', () => {
 
       const payment = {
         amount: amountToSend.toString(),
-        description: 'Tentativa de pagamento alto 💸',
+        description: 'Tentativa de pagamento alto ðŸ’¸',
       };
 
       cy.getBySel('nav-top-new-transaction').click();
@@ -107,7 +107,7 @@ describe('Enviar dinheiro com saldo insuficiente', () => {
         if (statusCode === 400 || statusCode === 422) {
           cy.getBySel('alert-bar-error').should('be.visible').and('contain', 'insufficient');
         } else {
-          cy.log('⚠️ Transação criada mesmo com saldo insuficiente');
+          cy.log('âš ï¸ TransaÃ§Ã£o criada mesmo com saldo insuficiente');
           cy.log(`Saldo atual: $${currentBalance / 100}, Tentou enviar: $${amountToSend}`);
 
           cy.database('find', 'users', { id: ctx.sender.id })

@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+﻿import { faker } from '@faker-js/faker';
 import Dinero from 'dinero.js';
 import { User } from '../../../src/models';
 import { isMobile } from '../../support/utils';
@@ -38,7 +38,7 @@ describe('New Transaction', function () {
   it('navigates to the new transaction form, selects a user and submits a transaction payment', function () {
     const payment = {
       amount: '35',
-      description: 'Sushi dinner 🍣',
+      description: 'Sushi dinner ðŸ£',
     };
 
     cy.getBySelLike('new-transaction').click();

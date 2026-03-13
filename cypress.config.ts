@@ -1,4 +1,4 @@
-import path from 'path';
+﻿import path from 'path';
 import _ from 'lodash';
 import axios from 'axios';
 import dotenv from 'dotenv';
@@ -75,14 +75,14 @@ export default defineConfig({
     experimentalRunAllSpecs: true,
     experimentalStudio: true,
     setupNodeEvents(on, config) {
-      // Log quando um vídeo é salvo
+      // Log quando um vÃ­deo Ã© salvo
       on('after:spec', (spec, results) => {
         if (results && results.video) {
           console.log('');
-          console.log('═══════════════════════════════════════════════════════════');
-          console.log('📹 VÍDEO DO TESTE SALVO EM:');
+          console.log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
+          console.log('ðŸ“¹ VÃDEO DO TESTE SALVO EM:');
           console.log(`   ${results.video}`);
-          console.log('═══════════════════════════════════════════════════════════');
+          console.log('â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•');
           console.log('');
         }
       });

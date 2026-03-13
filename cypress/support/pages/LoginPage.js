@@ -1,4 +1,4 @@
-class LoginPage {
+﻿class LoginPage {
   get usernameInput() {
     return cy.getBySel('signin-username');
   }

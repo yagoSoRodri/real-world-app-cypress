@@ -1,4 +1,4 @@
-// @ts-check
+﻿// @ts-check
 ///<reference path="../global.d.ts" />
 
 import { pick } from 'lodash/fp';
@@ -44,7 +44,7 @@ Cypress.Commands.add('login', (username, password, { rememberUser = false } = {}
   const log = Cypress.log({
     name: 'login',
     displayName: 'LOGIN',
-    message: [`🔐 Authenticating | ${username}`],
+    message: [`ðŸ” Authenticating | ${username}`],
     // @ts-ignore
     autoEnd: false,
   });
@@ -131,7 +131,7 @@ Cypress.Commands.add('loginByXstate', (username, password = Cypress.env('default
   const log = Cypress.log({
     name: 'loginbyxstate',
     displayName: 'LOGIN BY XSTATE',
-    message: [`🔐 Authenticating | ${username}`],
+    message: [`ðŸ” Authenticating | ${username}`],
     autoEnd: false,
   });
 
@@ -169,7 +169,7 @@ Cypress.Commands.add('logoutByXstate', () => {
   const log = Cypress.log({
     name: 'logoutByXstate',
     displayName: 'LOGOUT BY XSTATE',
-    message: [`🔒 Logging out current user`],
+    message: [`ðŸ”’ Logging out current user`],
     // @ts-ignore
     autoEnd: false,
   });
@@ -207,7 +207,7 @@ Cypress.Commands.add('createTransaction', (payload) => {
   const log = Cypress.log({
     name: 'createTransaction',
     displayName: 'CREATE TRANSACTION',
-    message: [`💸 (${payload.transactionType}): ${payload.sender.id} <> ${payload.receiver.id}`],
+    message: [`ðŸ’¸ (${payload.transactionType}): ${payload.sender.id} <> ${payload.receiver.id}`],
     // @ts-ignore
     autoEnd: false,
     consoleProps() {
@@ -239,7 +239,7 @@ Cypress.Commands.add('nextTransactionFeedPage', (service, page) => {
   const log = Cypress.log({
     name: 'nextTransactionFeedPage',
     displayName: 'NEXT TRANSACTION FEED PAGE',
-    message: [`📃 Fetching page ${page} with ${service}`],
+    message: [`ðŸ“ƒ Fetching page ${page} with ${service}`],
     // @ts-ignore
     autoEnd: false,
     consoleProps() {
@@ -267,7 +267,7 @@ Cypress.Commands.add('pickDateRange', (startDate, endDate) => {
   const log = Cypress.log({
     name: 'pickDateRange',
     displayName: 'PICK DATE RANGE',
-    message: [`🗓 ${startDate.toDateString()} to ${endDate.toDateString()}`],
+    message: [`ðŸ—“ ${startDate.toDateString()} to ${endDate.toDateString()}`],
     // @ts-ignore
     autoEnd: false,
     consoleProps() {
@@ -333,7 +333,7 @@ Cypress.Commands.add('database', (operation, entity, query, logTask = false) => 
   const log = Cypress.log({
     name: 'database',
     displayName: 'DATABASE',
-    message: [`🔎 ${operation}ing within ${entity} data`],
+    message: [`ðŸ”Ž ${operation}ing within ${entity} data`],
     // @ts-ignore
     autoEnd: false,
     consoleProps() {

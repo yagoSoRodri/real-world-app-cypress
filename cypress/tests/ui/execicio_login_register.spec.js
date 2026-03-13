@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+﻿import { faker } from '@faker-js/faker';
 import LoginPage from '../../support/pages/LoginPage';
 
 describe('Login com sucesso', () => {
@@ -6,7 +6,7 @@ describe('Login com sucesso', () => {
     cy.task('db:seed');
   });
 
-  it('Deve fazer login com um usuário válido', () => {
+  it('Deve fazer login com um usuÃ¡rio vÃ¡lido', () => {
     cy.database('find', 'users').then((user) => {
       cy.visit('/signin');
       LoginPage.fillLogin(user.username, 's3cret');
@@ -18,12 +18,12 @@ describe('Login com sucesso', () => {
   });
 });
 
-describe('Tentar fazer login com credenciais inválidas', () => {
+describe('Tentar fazer login com credenciais invÃ¡lidas', () => {
   beforeEach(() => {
     cy.task('db:seed');
   });
 
-  it('Deve exibir uma mensagem de erro ao fazer login com credenciais inválidas', () => {
+  it('Deve exibir uma mensagem de erro ao fazer login com credenciais invÃ¡lidas', () => {
     cy.visit('/signin');
     LoginPage.fillLogin('usuario_invalido', 'senha_invalida');
     LoginPage.submit();
@@ -34,12 +34,12 @@ describe('Tentar fazer login com credenciais inválidas', () => {
   });
 });
 
-describe('Registro de novo usuário com sucesso', () => {
+describe('Registro de novo usuÃ¡rio com sucesso', () => {
   beforeEach(() => {
     cy.task('db:seed');
   });
 
-  it('Deve registrar um novo usuário com informações válidas', () => {
+  it('Deve registrar um novo usuÃ¡rio com informaÃ§Ãµes vÃ¡lidas', () => {
     cy.intercept('POST', '/users').as('signup');
     cy.visit('/signup');
 
@@ -66,12 +66,12 @@ describe('Registro de novo usuário com sucesso', () => {
   });
 });
 
-describe('Tentar registrar um novo usuário com informações incompletas', () => {
+describe('Tentar registrar um novo usuÃ¡rio com informaÃ§Ãµes incompletas', () => {
   beforeEach(() => {
     cy.task('db:seed');
   });
 
-  it('Deve exibir mensagens de erro ao tentar registrar um novo usuário sem preencher todas as informações obrigatórias', () => {
+  it('Deve exibir mensagens de erro ao tentar registrar um novo usuÃ¡rio sem preencher todas as informaÃ§Ãµes obrigatÃ³rias', () => {
     cy.visit('/signup');
 
     cy.getBySel('signup-first-name').find('input').focus().blur();

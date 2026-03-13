@@ -1,13 +1,13 @@
-import { isMobile } from '../../support/utils';
+﻿import { isMobile } from '../../support/utils';
 
-// Previne que erros de DOM não capturados quebrem o teste
+// Previne que erros de DOM nÃ£o capturados quebrem o teste
 Cypress.on('uncaught:exception', (err) => {
   if (err.message.includes("Cannot read properties of null (reading 'document')")) {
     return false;
   }
 });
 
-describe('Visualizar histórico de transações com sucesso', () => {
+describe('Visualizar histÃ³rico de transaÃ§Ãµes com sucesso', () => {
   const ctx = {};
 
   beforeEach(() => {
@@ -31,7 +31,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
     });
   });
 
-  it('Deve exibir o histórico de transações de um usuário corretamente', () => {
+  it('Deve exibir o histÃ³rico de transaÃ§Ãµes de um usuÃ¡rio corretamente', () => {
     cy.wait('@notifications');
     cy.wait('@publicTransactions');
 
@@ -51,7 +51,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
           cy.getBySel('transaction-list').should('contain', transaction.description);
         });
 
-        cy.log(`✅ Exibindo ${transactions.length} transações no histórico`);
+        cy.log(`âœ… Exibindo ${transactions.length} transaÃ§Ãµes no histÃ³rico`);
 
         const firstTransaction = transactions[0];
         cy.getBySelLike('transaction-item')
@@ -70,7 +70,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
       });
   });
 
-  it('Deve permitir filtrar o histórico por data', () => {
+  it('Deve permitir filtrar o histÃ³rico por data', () => {
     cy.wait('@notifications');
     cy.wait('@publicTransactions');
 
@@ -86,7 +86,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
       cy.wait('@personalTransactions')
         .its('response.body.results')
         .then((filteredTransactions) => {
-          cy.log(`📅 Filtrado para ${filteredTransactions.length} transações`);
+          cy.log(`ðŸ“… Filtrado para ${filteredTransactions.length} transaÃ§Ãµes`);
 
           if (filteredTransactions.length > 0) {
             cy.getBySelLike('transaction-item').should('have.length', filteredTransactions.length);
@@ -95,7 +95,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
     });
   });
 
-  it('Deve permitir filtrar o histórico por valor', () => {
+  it('Deve permitir filtrar o histÃ³rico por valor', () => {
     cy.wait('@notifications');
     cy.wait('@publicTransactions');
 
@@ -117,7 +117,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
     cy.wait('@personalTransactions')
       .its('response.body.results')
       .then((filteredTransactions) => {
-        cy.log(`💰 Filtrado para ${filteredTransactions.length} transações`);
+        cy.log(`ðŸ’° Filtrado para ${filteredTransactions.length} transaÃ§Ãµes`);
 
         const rawAmountMin = amountRange.min * 100;
         const rawAmountMax = amountRange.max * 100;
@@ -128,7 +128,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
       });
   });
 
-  it('Deve permitir paginar o histórico de transações', () => {
+  it('Deve permitir paginar o histÃ³rico de transaÃ§Ãµes', () => {
     cy.wait('@notifications');
     cy.wait('@publicTransactions');
 
@@ -138,7 +138,7 @@ describe('Visualizar histórico de transações com sucesso', () => {
       .its('response.body.results')
       .should('have.length', Cypress.env('paginationPageSize'));
 
-    cy.log('📃 Rolando para a próxima página');
+    cy.log('ðŸ“ƒ Rolando para a prÃ³xima pÃ¡gina');
     cy.getBySel('transaction-list').children().scrollTo('bottom');
 
     cy.wait('@personalTransactions')
@@ -146,12 +146,12 @@ describe('Visualizar histórico de transações com sucesso', () => {
       .then(({ results, pageData }) => {
         expect(results).to.have.length.greaterThan(0);
         expect(pageData.page).to.equal(2);
-        cy.log(`✅ Página ${pageData.page} de ${pageData.totalPages} carregada`);
+        cy.log(`âœ… PÃ¡gina ${pageData.page} de ${pageData.totalPages} carregada`);
       });
   });
 });
 
-describe('Tentar visualizar o histórico de transações sem transações anteriores', () => {
+describe('Tentar visualizar o histÃ³rico de transaÃ§Ãµes sem transaÃ§Ãµes anteriores', () => {
   const ctx = {};
 
   beforeEach(() => {
@@ -175,7 +175,7 @@ describe('Tentar visualizar o histórico de transações sem transações anteri
     });
   });
 
-  it('Deve exibir uma mensagem indicando que não há transações quando filtro não retorna resultados', () => {
+  it('Deve exibir uma mensagem indicando que nÃ£o hÃ¡ transaÃ§Ãµes quando filtro nÃ£o retorna resultados', () => {
     cy.wait('@notifications');
     cy.wait('@publicTransactions');
 
@@ -194,7 +194,7 @@ describe('Tentar visualizar o histórico de transações sem transações anteri
       .and('have.attr', 'href', '/transaction/new')
       .contains('create a transaction', { matchCase: false });
 
-    cy.log('✅ Mensagem de lista vazia exibida corretamente');
+    cy.log('âœ… Mensagem de lista vazia exibida corretamente');
 
     cy.getBySelLike('empty-create-transaction-button').click();
     cy.location('pathname').should('equal', '/transaction/new');
@@ -218,6 +218,6 @@ describe('Tentar visualizar o histórico de transações sem transações anteri
 
     cy.getBySel('empty-list-header').should('be.visible').and('contain', 'No Transactions');
 
-    cy.log('✅ Lista vazia exibida para filtro de valor sem resultados');
+    cy.log('âœ… Lista vazia exibida para filtro de valor sem resultados');
   });
 });
