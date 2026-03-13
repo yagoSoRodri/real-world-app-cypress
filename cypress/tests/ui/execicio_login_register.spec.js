@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker';
 import LoginPage from '../../support/pages/LoginPage';
+
 describe('Login com sucesso', () => {
     beforeEach(() => {
         cy.task("db:seed");
@@ -8,9 +9,8 @@ describe('Login com sucesso', () => {
     it('Deve fazer login com um usuário válido', () => {
         cy.database("find", "users").then((user) => {
             cy.visit("/signin");
-            cy.getBySel("signin-username").type(user.username);
-            cy.getBySel("signin-password").type("s3cret");
-            cy.getBySel("signin-submit").click();
+            LoginPage.fillLogin(user.username, "s3cret");
+            LoginPage.submit();
 
             cy.location("pathname").should("equal", "/");
             cy.getBySel("sidenav-user-full-name").should("contain", user.firstName);
@@ -25,9 +25,8 @@ describe('Tentar fazer login com credenciais inválidas', () => {
 
     it('Deve exibir uma mensagem de erro ao fazer login com credenciais inválidas', () => {
         cy.visit("/signin");
-        cy.getBySel("signin-username").type("usuario_invalido");
-        cy.getBySel("signin-password").type("senha_invalida");
-        cy.getBySel("signin-submit").click();
+        LoginPage.fillLogin("usuario_invalido", "senha_invalida");
+        LoginPage.submit();
 
         cy.getBySel("signin-error")
             .should("be.visible")
@@ -46,8 +45,8 @@ describe('Registro de novo usuário com sucesso', () => {
 
         const password = faker.internet.password();
         const newUser = {
-            firstName: faker.person.firstName(),
-            lastName: faker.person.lastName(),
+            firstName: faker.name.firstName(),
+            lastName: faker.name.lastName(),
             username: faker.internet.userName(),
             password: password,
             confirmPassword: password
@@ -75,7 +74,6 @@ describe('Tentar registrar um novo usuário com informações incompletas', () =
     it('Deve exibir mensagens de erro ao tentar registrar um novo usuário sem preencher todas as informações obrigatórias', () => {
         cy.visit("/signup");
 
-        // Dispara validação tocando nos campos e saindo
         cy.getBySel("signup-first-name").find("input").focus().blur();
         cy.get("#firstName-helper-text").should("contain", "First Name is required");
 

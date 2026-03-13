@@ -51,8 +51,8 @@ describe("User Sign-up and Login", function () {
   it("should allow a visitor to sign-up, login, and logout", function () {
     const password = faker.internet.password();
     const userInfo = {
-      firstName: (faker as any).person.firstName(),
-      lastName: (faker as any).person.lastName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
       username: faker.internet.userName(),
       password,
     };
