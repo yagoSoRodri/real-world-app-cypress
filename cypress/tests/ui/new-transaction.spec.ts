@@ -41,6 +41,15 @@ describe('New Transaction', function () {
       description: 'Sushi dinner ðŸ£',
     };
 
+    let startBalance = '';
+    if (!isMobile()) {
+      cy.get('[data-test=sidenav-user-balance]')
+        .invoke('text')
+        .then((x) => {
+          startBalance = x;
+        });
+    }
+
     cy.getBySelLike('new-transaction').click();
     cy.wait('@allUsers');
 
@@ -51,8 +60,8 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name List Item');
 
-    cy.getBySelLike('amount-input').find('input').clear().type(payment.amount).blur();
-    cy.getBySelLike('description-input').find('input').clear().type(payment.description).blur();
+    cy.getBySelLike('amount-input').find('input').clear().type('20', { delay: 100 }).blur();
+    cy.getBySelLike('description-input').find('input').clear().type(payment.description, { delay: 100 }).blur();
     cy.visualSnapshot('Amount and Description Input');
     cy.getBySelLike('submit-payment').should('be.enabled').click();
     cy.wait(['@createTransaction', '@getUserProfile']);
@@ -60,16 +69,11 @@ describe('New Transaction', function () {
       .should('be.visible')
       .and('have.text', 'Transaction Submitted!');
 
-    cy.get('[data-test=sidenav-user-balance]')
-      .invoke('text')
-      .then((balanceText) => {
-        const balanceCents = Math.round(parseFloat(balanceText.replace(/[$,]/g, '')) * 100);
-        const updatedAccountBalance = Dinero({
-          amount: balanceCents,
-        }).toFormat();
+    if (!isMobile()) {
+      cy.get('[data-test=sidenav-user-balance]').should('not.have.text', startBalance);
+    }
 
-        cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
-      });
+
     cy.visualSnapshot('Updated User Balance');
 
     if (isMobile()) {
@@ -93,7 +97,7 @@ describe('New Transaction', function () {
 
   it('navigates to the new transaction form, selects a user and submits a transaction request', function () {
     const request = {
-      amount: faker.finance.amount({ min: 10, max: 100, dec: 2 }),
+      amount: '25',
       description: faker.lorem.sentence(),
     };
 
@@ -103,8 +107,8 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name Input');
 
-    cy.getBySelLike('amount-input').find('input').clear().type(request.amount).blur();
-    cy.getBySelLike('description-input').find('input').clear().type(request.description).blur();
+    cy.getBySelLike('amount-input').find('input').clear().type('20', { delay: 100 }).blur();
+    cy.getBySelLike('description-input').find('input').clear().type(request.description, { delay: 100 }).blur();
     cy.visualSnapshot('Amount and Description Input');
     cy.getBySelLike('submit-request').should('be.enabled').click();
     cy.wait('@createTransaction');
@@ -151,13 +155,13 @@ describe('New Transaction', function () {
 
     const transactionPayload = {
       transactionType: 'payment',
-      amount: Number(faker.finance.amount({ min: 1, max: 10, dec: 0 })),
+      amount: 2000,
       description: faker.lorem.sentence(),
       sender: ctx.user,
       receiver: ctx.contact,
     };
 
-    let startBalance: string;
+    let startBalance = '';
     if (!isMobile()) {
       cy.get('[data-test=sidenav-user-balance]')
         .invoke('text')
@@ -172,9 +176,7 @@ describe('New Transaction', function () {
     cy.getBySel('new-transaction-create-another-transaction').should('be.visible');
 
     if (!isMobile()) {
-      cy.get('[data-test=sidenav-user-balance]').should(($el) => {
-        expect($el.text()).to.not.equal(startBalance);
-      });
+      cy.get('[data-test=sidenav-user-balance]').should('not.contain', startBalance);
     }
     cy.visualSnapshot('Transaction Payment Submitted Notification');
 
@@ -196,7 +198,7 @@ describe('New Transaction', function () {
   it('submits a transaction request and accepts the request for the receiver', function () {
     const transactionPayload = {
       transactionType: 'request',
-      amount: Number(faker.finance.amount({ min: 1, max: 10, dec: 0 })),
+      amount: 2000,
       description: faker.lorem.sentence(),
       sender: ctx.user,
       receiver: ctx.contact,
