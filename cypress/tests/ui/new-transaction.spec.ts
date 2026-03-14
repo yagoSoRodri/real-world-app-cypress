@@ -51,8 +51,8 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name List Item');
 
-    cy.getBySelLike('amount-input').find('input').type(payment.amount).blur();
-    cy.getBySelLike('description-input').find('input').type(payment.description).blur();
+    cy.getBySelLike('amount-input').find('input').clear().type(payment.amount).blur();
+    cy.getBySelLike('description-input').find('input').clear().type(payment.description).blur();
     cy.visualSnapshot('Amount and Description Input');
     cy.getBySelLike('submit-payment').should('be.enabled').click();
     cy.wait(['@createTransaction', '@getUserProfile']);
@@ -103,8 +103,8 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name Input');
 
-    cy.getBySelLike('amount-input').find('input').type(request.amount).blur();
-    cy.getBySelLike('description-input').find('input').type(request.description).blur();
+    cy.getBySelLike('amount-input').find('input').clear().type(request.amount).blur();
+    cy.getBySelLike('description-input').find('input').clear().type(request.description).blur();
     cy.visualSnapshot('Amount and Description Input');
     cy.getBySelLike('submit-request').should('be.enabled').click();
     cy.wait('@createTransaction');
@@ -151,7 +151,7 @@ describe('New Transaction', function () {
 
     const transactionPayload = {
       transactionType: 'payment',
-      amount: Number(faker.finance.amount({ min: 10, max: 100, dec: 0 })),
+      amount: Number(faker.finance.amount({ min: 1, max: 10, dec: 0 })),
       description: faker.lorem.sentence(),
       sender: ctx.user,
       receiver: ctx.contact,
@@ -196,7 +196,7 @@ describe('New Transaction', function () {
   it('submits a transaction request and accepts the request for the receiver', function () {
     const transactionPayload = {
       transactionType: 'request',
-      amount: Number(faker.finance.amount({ min: 10, max: 100, dec: 0 })),
+      amount: Number(faker.finance.amount({ min: 1, max: 10, dec: 0 })),
       description: faker.lorem.sentence(),
       sender: ctx.user,
       receiver: ctx.contact,
