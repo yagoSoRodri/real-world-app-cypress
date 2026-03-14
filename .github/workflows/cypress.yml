@@ -17,15 +17,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
-          # No RealWorld App, o 'npm run dev' garante que API e Front subam juntos
-          start: npm run dev
-
-          # Espera o servidor na porta 3000 estar pronto
+          record: false
+          parallel: false
+          
+          start: yarn start:ci
           wait-on: 'http://localhost:3000'
-
-          # Dá um tempo extra (3 min) pois o ambiente do GitHub pode ser lento
           wait-on-timeout: 180
-
           browser: chrome
           headless: true
 
