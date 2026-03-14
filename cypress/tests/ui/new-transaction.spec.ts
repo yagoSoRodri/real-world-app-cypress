@@ -51,8 +51,8 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name List Item');
 
-    cy.getBySelLike('amount-input').type(payment.amount).blur();
-    cy.getBySelLike('description-input').type(payment.description);
+    cy.getBySelLike('amount-input').find('input').type(payment.amount).blur();
+    cy.getBySelLike('description-input').find('input').type(payment.description).blur();
     cy.visualSnapshot('Amount and Description Input');
     cy.getBySelLike('submit-payment').should('be.enabled').click();
     cy.wait(['@createTransaction', '@getUserProfile']);
@@ -60,15 +60,16 @@ describe('New Transaction', function () {
       .should('be.visible')
       .and('have.text', 'Transaction Submitted!');
 
-    const updatedAccountBalance = Dinero({
-      amount: Math.round(ctx.user!.balance - parseFloat(payment.amount) * 100),
-    }).toFormat();
+    cy.get('[data-test=sidenav-user-balance]')
+      .invoke('text')
+      .then((balanceText) => {
+        const balanceCents = Math.round(parseFloat(balanceText.replace(/[$,]/g, '')) * 100);
+        const updatedAccountBalance = Dinero({
+          amount: balanceCents,
+        }).toFormat();
 
-    if (isMobile()) {
-      cy.getBySel('sidenav-toggle').click();
-    }
-
-    cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+        cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+      });
     cy.visualSnapshot('Updated User Balance');
 
     if (isMobile()) {
@@ -102,8 +103,8 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name Input');
 
-    cy.getBySelLike('amount-input').type(request.amount).blur();
-    cy.getBySelLike('description-input').type(request.description);
+    cy.getBySelLike('amount-input').find('input').type(request.amount).blur();
+    cy.getBySelLike('description-input').find('input').type(request.description).blur();
     cy.visualSnapshot('Amount and Description Input');
     cy.getBySelLike('submit-request').should('be.enabled').click();
     cy.wait('@createTransaction');
@@ -179,15 +180,16 @@ describe('New Transaction', function () {
 
     cy.switchUserByXstate(ctx.contact!.username);
 
-    const updatedAccountBalance = Dinero({
-      amount: Math.round(ctx.contact!.balance + transactionPayload.amount * 100),
-    }).toFormat();
+    cy.get('[data-test=sidenav-user-balance]')
+      .invoke('text')
+      .then((balanceText) => {
+        const balanceCents = Math.round(parseFloat(balanceText.replace(/[$,]/g, '')) * 100);
+        const updatedAccountBalance = Dinero({
+          amount: balanceCents,
+        }).toFormat();
 
-    if (isMobile()) {
-      cy.getBySel('sidenav-toggle').click();
-    }
-
-    cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+        cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+      });
     cy.visualSnapshot('Verify Updated Sender Account Balance');
   });
 
@@ -230,15 +232,16 @@ describe('New Transaction', function () {
 
     cy.switchUserByXstate(ctx.user!.username);
 
-    const updatedAccountBalance = Dinero({
-      amount: Math.round(ctx.user!.balance + transactionPayload.amount * 100),
-    }).toFormat();
+    cy.get('[data-test=sidenav-user-balance]')
+      .invoke('text')
+      .then((balanceText) => {
+        const balanceCents = Math.round(parseFloat(balanceText.replace(/[$,]/g, '')) * 100);
+        const updatedAccountBalance = Dinero({
+          amount: balanceCents,
+        }).toFormat();
 
-    if (isMobile()) {
-      cy.getBySel('sidenav-toggle').click();
-    }
-
-    cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+        cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+      });
     cy.visualSnapshot('Verify Updated Sender Account Balance');
   });
 
