@@ -1,4 +1,4 @@
-﻿// @ts-check
+// @ts-check
 ///<reference path="../global.d.ts" />
 
 import { pick } from 'lodash/fp';
@@ -169,7 +169,7 @@ Cypress.Commands.add('logoutByXstate', () => {
   const log = Cypress.log({
     name: 'logoutByXstate',
     displayName: 'LOGOUT BY XSTATE',
-    message: [`ðŸ”’ Logging out current user`],
+    message: [`🔓 Logging out current user`],
     // @ts-ignore
     autoEnd: false,
   });
@@ -207,7 +207,7 @@ Cypress.Commands.add('createTransaction', (payload) => {
   const log = Cypress.log({
     name: 'createTransaction',
     displayName: 'CREATE TRANSACTION',
-    message: [`ðŸ’¸ (${payload.transactionType}): ${payload.sender.id} <> ${payload.receiver.id}`],
+    message: [`💸 (${payload.transactionType}): ${payload.sender.id} <> ${payload.receiver.id}`],
     // @ts-ignore
     autoEnd: false,
     consoleProps() {

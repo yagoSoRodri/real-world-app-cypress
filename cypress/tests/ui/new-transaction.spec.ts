@@ -1,4 +1,4 @@
-﻿import { faker } from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import Dinero from 'dinero.js';
 import { User } from '../../../src/models';
 import { isMobile } from '../../support/utils';
@@ -51,17 +51,17 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name List Item');
 
-    cy.getBySelLike('amount-input').type(payment.amount);
+    cy.getBySelLike('amount-input').type(payment.amount).blur();
     cy.getBySelLike('description-input').type(payment.description);
     cy.visualSnapshot('Amount and Description Input');
-    cy.getBySelLike('submit-payment').click();
+    cy.getBySelLike('submit-payment').should('be.enabled').click();
     cy.wait(['@createTransaction', '@getUserProfile']);
     cy.getBySel('alert-bar-success')
       .should('be.visible')
       .and('have.text', 'Transaction Submitted!');
 
     const updatedAccountBalance = Dinero({
-      amount: ctx.user!.balance - parseInt(payment.amount) * 100,
+      amount: Math.round(ctx.user!.balance - parseFloat(payment.amount) * 100),
     }).toFormat();
 
     if (isMobile()) {
@@ -85,7 +85,7 @@ describe('New Transaction', function () {
 
     cy.database('find', 'users', { id: ctx.contact!.id })
       .its('balance')
-      .should('equal', ctx.contact!.balance + parseInt(payment.amount) * 100);
+      .should('equal', ctx.contact!.balance + Math.round(parseFloat(payment.amount) * 100));
     cy.getBySel('alert-bar-success').should('not.exist');
     cy.visualSnapshot('Personal List Validate Transaction in List');
   });
@@ -102,10 +102,10 @@ describe('New Transaction', function () {
     cy.getBySelLike('user-list-item').contains(ctx.contact!.firstName).click({ force: true });
     cy.visualSnapshot('User Search First Name Input');
 
-    cy.getBySelLike('amount-input').type(request.amount);
+    cy.getBySelLike('amount-input').type(request.amount).blur();
     cy.getBySelLike('description-input').type(request.description);
     cy.visualSnapshot('Amount and Description Input');
-    cy.getBySelLike('submit-request').click();
+    cy.getBySelLike('submit-request').should('be.enabled').click();
     cy.wait('@createTransaction');
     cy.getBySel('alert-bar-success')
       .should('be.visible')
@@ -180,7 +180,7 @@ describe('New Transaction', function () {
     cy.switchUserByXstate(ctx.contact!.username);
 
     const updatedAccountBalance = Dinero({
-      amount: ctx.contact!.balance + transactionPayload.amount * 100,
+      amount: Math.round(ctx.contact!.balance + transactionPayload.amount * 100),
     }).toFormat();
 
     if (isMobile()) {
@@ -219,7 +219,7 @@ describe('New Transaction', function () {
     cy.getBySel('transaction-detail-header').should('exist');
     cy.visualSnapshot('Navigate to Transaction Item');
 
-    cy.getBySelLike('accept-request').click();
+    cy.getBySelLike('accept-request').should('be.enabled').click();
     cy.wait('@updateTransaction').its('response.statusCode').should('eq', 204);
     cy.getBySelLike('transaction-detail-header').should('be.visible');
     cy.getBySelLike('transaction-amount').should('be.visible');
@@ -231,7 +231,7 @@ describe('New Transaction', function () {
     cy.switchUserByXstate(ctx.user!.username);
 
     const updatedAccountBalance = Dinero({
-      amount: ctx.user!.balance + transactionPayload.amount * 100,
+      amount: Math.round(ctx.user!.balance + transactionPayload.amount * 100),
     }).toFormat();
 
     if (isMobile()) {
