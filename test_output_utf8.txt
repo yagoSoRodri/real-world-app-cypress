@@ -20,40 +20,25 @@ n/bin/yarn.js" $args
   andError
  
 DevTools listening on w
-s://127.0.0.1:11173/dev
-tools/browser/7b9d0b5b-
-03ce-4358-88c0-1f017053
-2a00
+s://127.0.0.1:16302/dev
+tools/browser/737feccf-
+067c-422a-9cd4-b6b7863c
+e283
+Cypress could not verify that this server is running:
 
-====================================================================================================
+  > http://localhost:3000
 
-  (Run Starting)
+We are verifying this server because it has been configured as your baseUrl.
 
-  ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
-  Ôöé Cypress:        15.0.0                                                                         Ôöé
-  Ôöé Browser:        Electron 136 (headless)                                                        Ôöé
-  Ôöé Node Version:   v20.20.0 (C:\Program Files\nodejs\node.exe)                                    Ôöé
-  Ôöé Specs:          1 found (new-transaction.spec.ts)                                              Ôöé
-  Ôöé Searched:       C:\Users\yagoh\OneDrive\Documentos\Desenvolvimento\cypress-realworld-app-devel Ôöé
-  Ôöé                 op\cypress-realworld-app-develop\cypress\tests\ui\new-transaction.spec.ts      Ôöé
-  Ôöé Experiments:    experimentalRunAllSpecs=true,experimentalStudio=true                           Ôöé
-  ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ
+Cypress automatically waits until your server is accessible before running tests.
 
+We will try connecting to it 3 more times...
+We will try connecting to it 2 more times...
+We will try connecting to it 1 more time...
 
-ÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇ
-                                                                                                    
-  Running:  new-transaction.spec.ts                                                         (1 of 1)
-<<<CYPRESS.STDERR.START
->>>Browserslist: 
-browsers data 
-(caniuse-lite) is 9 
-months old. Please run:
-  npx update-browsersli
-st-db@latest
-  Why you should do it 
-regularly: https://gith
-ub.com/browserslist/upd
-ate-db#readme
+Cypress failed to verify that your server is running.
 
-
-  New Transaction
+Please start this server and then run Cypress again.
+error Command failed 
+with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

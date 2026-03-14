@@ -37,16 +37,18 @@ describe('New Transaction', function () {
 
   it('navigates to the new transaction form, selects a user and submits a transaction payment', function () {
     const payment = {
-      amount: '35',
-      description: 'Sushi dinner ðŸ£',
+      amount: '20',
+      description: 'Transaction Payment Test - Sushi',
     };
 
     let startBalance = '';
     if (!isMobile()) {
       cy.get('[data-test=sidenav-user-balance]')
+        .should('be.visible')
         .invoke('text')
-        .then((x) => {
-          startBalance = x;
+        .then((text) => {
+          startBalance = text;
+          expect(startBalance).to.match(/\$\d/);
         });
     }
 
@@ -70,7 +72,17 @@ describe('New Transaction', function () {
       .and('have.text', 'Transaction Submitted!');
 
     if (!isMobile()) {
-      cy.get('[data-test=sidenav-user-balance]').should('not.have.text', startBalance);
+      cy.get('[data-test=sidenav-user-balance]')
+        .should('not.have.text', startBalance)
+        .invoke('text')
+        .then((balanceText) => {
+          const balanceCents = Math.round(parseFloat(balanceText.replace(/[$,]/g, '')) * 100);
+          const updatedAccountBalance = Dinero({
+            amount: balanceCents,
+          }).toFormat();
+
+          cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+        });
     }
 
 
@@ -86,7 +98,7 @@ describe('New Transaction', function () {
     cy.getBySelLike('personal-tab').should('have.class', 'Mui-selected');
     cy.wait('@personalTransactions');
 
-    cy.getBySel('transaction-list').first().should('contain', payment.description);
+    cy.contains(payment.description).should('be.visible');
 
     cy.database('find', 'users', { id: ctx.contact!.id })
       .its('balance')
@@ -97,8 +109,8 @@ describe('New Transaction', function () {
 
   it('navigates to the new transaction form, selects a user and submits a transaction request', function () {
     const request = {
-      amount: '25',
-      description: faker.lorem.sentence(),
+      amount: '20',
+      description: 'Transaction Request Test - Lunch',
     };
 
     cy.getBySelLike('new-transaction').click();
@@ -121,7 +133,7 @@ describe('New Transaction', function () {
     cy.getBySelLike('personal-tab').click();
     cy.getBySelLike('personal-tab').should('have.class', 'Mui-selected');
 
-    cy.getBySelLike('transaction-item').should('contain', request.description);
+    cy.contains(request.description).should('be.visible');
     cy.visualSnapshot('Transaction Item Description in List');
   });
 
@@ -164,9 +176,10 @@ describe('New Transaction', function () {
     let startBalance = '';
     if (!isMobile()) {
       cy.get('[data-test=sidenav-user-balance]')
+        .should('be.visible')
         .invoke('text')
-        .then((x) => {
-          startBalance = x;
+        .then((text) => {
+          startBalance = text;
           expect(startBalance).to.match(/\$\d/);
         });
     }
@@ -176,9 +189,19 @@ describe('New Transaction', function () {
     cy.getBySel('new-transaction-create-another-transaction').should('be.visible');
 
     if (!isMobile()) {
-      cy.get('[data-test=sidenav-user-balance]').should('not.contain', startBalance);
+      cy.get('[data-test=sidenav-user-balance]')
+        .should('not.have.text', startBalance)
+        .invoke('text')
+        .then((balanceText) => {
+          const balanceCents = Math.round(parseFloat(balanceText.replace(/[$,]/g, '')) * 100);
+          const updatedAccountBalance = Dinero({
+            amount: balanceCents,
+          }).toFormat();
+
+          cy.getBySelLike('user-balance').should('contain', updatedAccountBalance);
+        });
     }
-    cy.visualSnapshot('Transaction Payment Submitted Notification');
+    cy.visualSnapshot('Updated User Balance');
 
     cy.switchUserByXstate(ctx.contact!.username);
 
@@ -199,7 +222,7 @@ describe('New Transaction', function () {
     const transactionPayload = {
       transactionType: 'request',
       amount: 2000,
-      description: faker.lorem.sentence(),
+      description: 'Transaction Request Acceptance Test',
       sender: ctx.user,
       receiver: ctx.contact,
     };
@@ -214,11 +237,10 @@ describe('New Transaction', function () {
 
     cy.getBySelLike('personal-tab').click();
 
-    cy.wait('@personalTransactions');
-
-    cy.getBySelLike('transaction-item')
-      .first()
-      .should('contain', transactionPayload.description)
+    cy.getBySelLike('transaction-item').should('have.length.at.least', 1);
+    cy.contains(transactionPayload.description)
+      .scrollIntoView()
+      .should('be.visible')
       .click({ force: true });
     cy.getBySel('transaction-detail-header').should('exist');
     cy.visualSnapshot('Navigate to Transaction Item');
